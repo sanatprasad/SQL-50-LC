@@ -91,14 +91,13 @@ WHERE w1.temperature > w2.temperature;
 
 [1661 - Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/)
 ```sql
-SELECT machine_id, ROUND(AVG(end - start), 3) AS processing_time
-FROM 
-(SELECT machine_id, process_id, 
-    MAX(CASE WHEN activity_type = 'start' THEN timestamp END) AS start,
-    MAX(CASE WHEN activity_type = 'end' THEN timestamp END) AS end
- FROM Activity 
-  GROUP BY machine_id, process_id) AS subq
-GROUP BY machine_id
+# Write your MySQL query statement below
+select a1.machine_id, round(avg(a2.timestamp-a1.timestamp), 3) as processing_time 
+from Activity a1
+join Activity a2 
+on a1.machine_id=a2.machine_id and a1.process_id=a2.process_id
+and a1.activity_type='start' and a2.activity_type='end'
+group by a1.machine_id
 ```
 
 [577 - Employee Bonus](https://leetcode.com/problems/employee-bonus/solutions/)
